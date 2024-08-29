@@ -1,6 +1,6 @@
 import express from 'express'
 import url from 'url'
-
+import router from './router/index.js'
 const __dirname = url.fileURLToPath(new URL(".", import.meta.url))
 
 const app = express()
@@ -17,8 +17,10 @@ app.listen(port, () => {
 app.get('/about', (req,res) => {
     res.send('About')
 })
+app.use(router)
 
-app.get('/data', (req, res) => {
+//if you want get value from query browser
+/** app.get('/data', (req, res) => {
     let id = req.query.id
     let name = req.query.name
     if(id && name)
@@ -27,12 +29,10 @@ app.get('/data', (req, res) => {
     }
     else
     {
-        res.sendFile("./pages/404.html", {root:__dirname})
+        res.send(`Get all data`)
     }
-})
+}) */
+
+
 
 //pengecualian kalau url tidak ditemukan
-app.use('/', (req,res) => {
-    res.status(404)
-    res.sendFile("./pages/404.html", {root:__dirname})
-})
